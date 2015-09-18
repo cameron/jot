@@ -1,0 +1,24 @@
+pixiname-asterisk {
+  position: absolute;
+  top: 7%;
+  left: 7.5%;
+  font-size: 2em;
+  font-weight: bold;
+  color: #999;
+}
+
+found, not-found {
+  position: absolute;
+  right: 2em;
+  top: 0;
+  bottom: 0;
+  color: transparentize($btn-color, .3);
+  margin: 4% 0;
+  size: .9em;
+}
+
+not-found {
+  color: red;
+}
+
+/* TODO dedupe with the create-account-pick-pixiname input  */

@@ -1,0 +1,27 @@
+<px-view-controller class="modal-vc"
+                    ng-controller="ModalCtrl"
+                    ng-class="{show: modal.show}"
+                    ng-repeat="modal in modals"
+                    title="{{ modal.title }}"
+                    modal="modal"
+                    left-btn-click="modal.cancel"
+                    left-btn-class="ss-delete"
+                    px-link="loaded()">
+  <modal px-view="modal.name"></modal>
+</px-view-controller>
+
+<simple-confirm ng-class="{show: confirmText}"
+                ng-click="no($event)">
+  <contents>
+    <confirm-msg>{{ confirmText }}</confirm-msg>
+    <form>
+      <px-submit ng-show="posPrompt"
+                 click="yes()"
+                 value="posPrompt"></px-submit>
+      <no ng-show="negPrompt"
+          ng-click="no($event)">
+        {{ negPrompt }}
+      </no>
+    </form>
+  </contents>
+</simple-confirm>

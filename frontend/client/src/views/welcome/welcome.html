@@ -1,0 +1,10 @@
+<h2>Welcome!</h2>
+<h3>*{{ user.name }}</h3>
+<p>(Pronounced "star {{ user.name }}")</p>
+<form>
+  <input type="submit"
+         ng-click="addContacts()"
+         value="Let's add some contacts">
+  <br><br>
+  <a ng-click="modal.complete()">I'll do that later</a>
+</form>

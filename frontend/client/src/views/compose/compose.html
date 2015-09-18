@@ -1,0 +1,99 @@
+<px-recipients px-click-to-z-above-sibs></px-recipients>
+
+<px-send-confirmation class="right"
+                      ng-class="{left: readyToSend,
+                                right: !sent && !readyToSend}">
+</px-send-confirmation>
+
+<cancel class="info-text"
+        px-visible="readyToSend"
+        ng-click="readyToSend = false">
+  back
+</cancel>
+
+<px-note-input ng-class="{left: sendAnimComplete,
+                         sent: sent}"
+               px-transition-end="sent && sendAnimationComplete()"
+               px-click-to-z-above-sibs>
+</px-note-input>
+
+<cost px-visible="user.address && !sent && !user.note.focus">
+  <infos>
+    <bcuz ng-show="user.note.recipients.length > 0 &&
+                      !readyToSend">
+      Sending to {{ user.note.recipients.length}} recipient{{ user.note.recipients.length > 1 ? 's' : ''}}
+    </bcuz>
+    <bcuz ng-show="readyToSend">Your card {{ user.card.last4 }} will be charged</bcuz>
+  </infos>
+  <dollars>${{ (user.note.recipients.length * 2.5).toFixed(2) }}</dollars>
+  <error ng-if="error">{{ error }}</error>
+</cost>
+
+<action-bar class="btn"
+            ng-class="{short: user.note.focus != false}"
+            ng-switch="nextAction">
+
+  <prompt class="hint"
+          ng-switch-when="recipients"
+          ng-click="addRecipient()">
+    <text>Add a recipient</text>
+  </prompt>
+
+  <prompt class="hint"
+          ng-switch-when="image"
+          ng-click="addImage()">
+    <text>Add a photo</text>
+  </prompt>
+
+  <prompt class="cropper-controls camera"
+          ng-switch-when="editImage"
+          ng-click="pickImage()">
+    <icon><img src="views/compose/camera.png"></icon>
+    <text></text>
+  </prompt>
+
+  <prompt class="cropper-controls"
+          ng-switch-when="editImage"
+          ng-click="doneCropping()">
+    <text>Done</text>
+  </prompt>
+
+  <prompt class="hint"
+          ng-switch-when="text"
+          ng-click="addText()">
+    <text>Add a message</text>
+  </prompt>
+
+  <prompt ng-switch-when="completeText"
+          ng-click="doneWriting()">
+    <text>Done</text>
+  </prompt>
+
+  <prompt class="seal"
+          ng-switch-when="seal"
+          ng-click="seal()">
+    <text>Seal Pixinote</text>
+  </prompt>
+
+  <prompt class="send primary"
+          ng-switch-when="send"
+          ng-click="send()">
+    <text>Send Pixinote</text>
+  </prompt>
+
+  <prompt class="sending primary"
+          ng-switch-when="sending">
+    <px-loading class="white"></px-loading>
+  </prompt>
+
+  <prompt ng-switch-when="add-cc"
+          ng-click="addCC()">
+    <text>Add Credit Card</text>
+  </prompt>
+
+  <prompt ng-switch-when="newNote"
+          ng-click="newNote()">
+    <text>Create Another</text>
+  </prompt>
+
+</action-bar>

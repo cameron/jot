@@ -1,0 +1,77 @@
+<form class="add-cc"
+      name="addCC" novalidate>
+
+  <div ng-if="!modal.data.update">
+    <h2>Who's buying?</h2>
+    <p>Pixinotes cost $2.50 to send.<br>We'll need to keep a card on file.</p>
+  </div>
+
+  <div ng-if="modal.data.update">
+    <h2>Need to change your card?</h2>
+    <p>Enter the details below.</p>
+  </div>
+
+  <input type="tel"
+         placeholder="{{ modal.data.update ?
+                      'XXXX XXXX XXXX ' + user.card.last4
+                      : 'Card number' }}"
+         ng-model="number"
+         px-validate-credit-card-num
+         ng-minlength="8"
+         ng-maxlength="16"
+         ng-focus="addCC.number.$focused = true"
+         ng-blur="addCC.number.$focused = false"
+         name="number">
+  <error ng-show="addCC.number.$dirty && addCC.number.$invalid && !addCC.number.$focused">
+    That is not a valid card number.
+  </error>
+
+  <expiry-and-cvc>
+    <input type="text"
+           placeholder="{{ modal.data.update ? user.card.expire_month + '/' + user.card.expire_year : 'Expiry (MM/YY)' }}"
+           px-validate-expiry
+           ng-model="expiry"
+           ng-minlength="5"
+           ng-maxlength="5"
+           maxlength="5"
+           ng-focus="addCC.expiry.$focused = true"
+           ng-blur="addCC.expiry.$focused = false"
+           name="expiry">
+    <input type="number"
+           placeholder="CVC"
+           px-validate-cvc
+           ng-model="cvc"
+           ng-minlength="3"
+           ng-maxlength="4"
+           maxlength="4"
+           ng-focus="addCC.cvc.$focused = true"
+           ng-blur="addCC.cvc.$focused = false"
+           name="cvc"
+           required>
+  </expiry-and-cvc>
+  <error ng-show="addCC.expiry.$dirty && addCC.expiry.$invalid && !addCC.expiry.$focused">
+    That is not a valid expiration date.
+  </error>
+
+  <error ng-show="addCC.cvc.$dirty && addCC.cvc.$invalid && !addCC.cvc.$focused">
+    That is not a valid security code.
+  </error>
+
+
+  <input type="number"
+         placeholder="Zip"
+         ng-model="zip"
+         ng-minlength="5"
+         ng-maxlength="5"
+         ng-focus="addCC.zip.$focused = true"
+         ng-blur="addCC.zip.$focused = false"
+         name="zip"
+         required>
+  <error ng-show="addCC.zip.$dirty && addCC.zip.$invalid && !addCC.zip.$focused">
+    That is not a valid zip code.
+  </error>
+
+  <error ng-show="stripeError">{{ stripeError }}</error>
+  <px-submit click="add()"
+             value="modal.data.update ? 'Update' : 'Done!'">
+</form>

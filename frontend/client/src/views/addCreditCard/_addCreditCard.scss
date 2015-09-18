@@ -1,0 +1,19 @@
+expiry-and-cvc {
+  @include input-row;
+  @include display-flex;
+  @include vendor-prefix(justify-content, space-between);
+  width: 90%; // not sure why the 2em isn't necessary here
+}
+
+input[name="expiry"], input[name="cvc"]{
+  margin: 0;
+  flex: none;
+}
+
+input[name="expiry"]{
+  width: 49%;
+}
+
+input[name="cvc"]{
+  width: 20%;
+}

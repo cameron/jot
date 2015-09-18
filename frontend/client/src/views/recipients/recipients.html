@@ -1,0 +1,72 @@
+<recipients-input ng-click="focus($event)"
+                  ng-class="{'next-action': nextAction == 'recipients',
+                            empty: user.note.recipients.length == 0}">
+  <label class="to-label" for="recipient-search">
+    Dear:
+  </label>
+
+  <placeholder ng-show="!showAddressBook">
+    add recipients
+  </placeholder>
+
+  <recipients>
+    <recipient ng-repeat="recipient in user.note.recipients"
+               ng-class="{removing: recipient.confirmingRemoval}">
+      {{ recipient.name ? '*' + recipient.name : recipient.realname }}<span ng-if="!$last">,</span>
+    </recipient>
+    <input class="recipient-search"
+           type="text"
+           ng-disabled="contacts.length == 0"
+           ng-model="searchText"
+           ng-blur="searchBlur()"
+           px-empty-backspace="popRecipient()"/>
+  </recipients>
+
+  <add-contact ng-show="showAddressBook"
+               ng-click="addContact($event)">
+      <img src="views/recipients/add.png"/>
+  </add-contact>
+
+</recipients-input>
+
+<address-book ng-show="showAddressBook">
+
+  <contacts-list class="scrollable-content list-group">
+    <contact-li ng-repeat="contact in contacts | filter:searchText"
+                ng-show="!contact.recipient"
+                ng-click="addRecipient(contact, $event)">
+      <contact-photo>
+        <img ng-src="{{ contact.name == user.name ? user.avatarSrc :
+                     (contact.member ?
+                     '/api/users/' + contact.name + '/avatar' :
+                     'views/recipients/pixi.by.address.png') }}">
+      </contact-photo>
+      <contact-id>
+        <realname> {{ contact.realname }} </realname>
+        <pixiname ng-show="contact.name"> *{{ contact.name }}</pixiname>
+      </contact-id>
+      <edit class="ss-write"
+            ng-click="editContact(contact, $event)"
+            ng-show="!contact.member">&nbsp;</edit>
+      <delete class=""
+              ng-class="{'ss-delete': !contact.confirmingDeletion,
+                        confirm: contact.confirmingDeletion}"
+              ng-click="deleteContact(contact, $event)"
+              ng-show="contact.member">
+        {{ contact.confirmingDeletion ? 'remove': ''}}
+      </delete>
+    </contact-li>
+
+    <contact-li ng-click="addContact($event)">
+      Tap <img src="views/recipients/add.png"> to add a contact.
+    </contact-li>
+
+    <contact-li ng-click="showAddressBook = false" class="back-link">
+      back
+    </contact-li>
+
+  </contacts-list>
+
+
+  <px-loading ng-show="contacts === undefined"></px-loading>
+</address-book>

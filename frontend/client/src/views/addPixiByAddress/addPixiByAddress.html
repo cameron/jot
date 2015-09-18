@@ -1,0 +1,56 @@
+<div class="scrollable-content">
+  <form name="byAddress" class="by-address">
+    <input type="text"
+           ng-model="realname"
+           placeholder="Name"
+           name="realname"
+           required
+           ng-minlength="1">
+    <error ng-if="byAddress.realname.$invalid && byAddress.realname.$dirty && realname.length">
+      Erm. Name please.
+    </error>
+
+    <input type="text"
+           ng-model="street1"
+           placeholder="Address"
+           required
+           name="street1"
+           ng-model-options="{ debounce: 300 }">
+    <error ng-if="byAddress.street1.$invalid && byAddress.street1.$dirty && street1.length">
+      That doesn't look like a valid address.
+    </error>
+
+    <input type="text"
+           ng-model="street2"
+           placeholder="Apt, floor, or suite (optional)"
+           name="street2">
+
+    <input type="number"
+           ng-model="zip"
+           required
+           ng-minlength="5"
+           ng-maxlength="5"
+           placeholder="Zip"
+           ng-focus="byAddress.zip.$focused = true"
+           ng-blur="byAddress.zip.$focused = false"
+           name="zip">
+    <error ng-show="byAddress.zip.$invalid && byAddress.zip.$dirty && !byAddress.zip.$focused">
+      Zip codes must be 5 digits.
+    </error>
+
+    <px-submit click="submit()"
+               value="modal.data.pixi ? 'Update' : 'Save'"></px-submit>
+  </form>
+  <delete class="link secondary-form-action delete-pixi"
+          ng-class="{confirming: confirmingDelete}"
+          ng-click="delete()"
+          ng-hide="deleting"
+          ng-if="modal.data.contact.member === false">
+    {{
+      confirmingDelete ?
+      'Tap once more to remove' :
+      'Delete'
+    }}
+  </delete>
+  <px-loading ng-show="deleting"></px-loading>
+</div>

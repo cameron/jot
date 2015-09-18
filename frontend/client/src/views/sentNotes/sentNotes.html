@@ -1,0 +1,11 @@
+<px-loading ng-if="notes === undefined"></px-loading>
+<info-text ng-show="notes.length > 0">
+  Use sent notes as templates.<br>
+  Send it again or modify it first.
+</info-text>
+<info-text ng-show="notes.length == 0">
+  your sent pixinotes will hang out here
+</info-text>
+<note-template ng-repeat="note in notes" ng-click="selectTemplate(note)">
+  <px-note-input></px-note-input>
+</note-template>

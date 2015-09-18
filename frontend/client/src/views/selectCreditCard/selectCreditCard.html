@@ -1,0 +1,16 @@
+<ul class="ccs">
+  <li class="cc"
+      ng-class="{selected: card == user.card}"
+      ng-repeat="card in cards"
+      ng-click="select(card)">
+    <span class="card-name">{{ card.name }}</span>
+    <span class="card-type">
+      <img class="cc-icon" ng-src="{{ ccIconUrl(card.type) }}">
+    </span>
+    <span class="card-last4">{{ card.last4 }}</span>
+  </li>
+  <li ng-click="modals.show('addCreditCard', 'add card').then(modal.close)"
+      class="cc add-card">
+    <button class="small-btn">Add New</button>
+  </li>
+</ul>

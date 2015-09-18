@@ -1,0 +1,36 @@
+<form name="addPixi" class="add-pixi">
+  <position-relative> <!-- for the pixiname-asterisk positioning -->
+    <input type="text"
+           class="pixiname"
+           ng-model="name"
+           autocomplete="off"
+           placeholder="By pixiname"
+           name-must-be-unregistered="false"
+           name="name"
+           ng-minlength="1"
+           ng-focus="addPixi.name.focused = true"
+           ng-blur="addPixi.name.focused = false"
+           ng-model-options="{debounce: 300}">
+    <pixiname-asterisk ng-show="addPixi.name.focused || name.length > 0">*</pixiname-asterisk>
+    <found ng-show="addPixi.name.$valid">
+      found a match!
+    </found>
+    <not-found ng-show="addPixi.name.$invalid && addPixi.name.$dirty && addPixi.name.$viewValue.length">
+      no such pixi
+    </not-found>
+  </position-relative>
+
+  <px-submit click="addContact()"
+             value="'Add as Contact'"></px-submit>
+
+  <br>
+  <br>
+  <p>Or you can...</p>
+  <input type="submit"
+         ng-click="byAddress()"
+         value="Add by address">
+  <input type="submit"
+         name="invite"
+         ng-click="invite()"
+         value="Invite via email">
+</form>

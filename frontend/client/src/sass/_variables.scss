@@ -1,0 +1,37 @@
+$blue: #007AFF;
+$blue-light: #3395FF;
+$red: #CB3F41;
+$white-grey: #F1F2F2;
+$light-grey: #BDC1C9;
+$lighter-grey: #EEE;
+$dark-grey: #333;
+
+$font-family: "Helvetica Neue", "Helvetica", Arial, "Lucida Grande", sans-serif;
+$text-color: $dark-grey;
+$text-color-nav: $red;
+$text-shadow: rgba(0, 0, 0, .14) 0 1px 1px;
+
+// keep in sycn with views/modals/modals.js:modal.close
+$animation-duration: 300ms;
+
+$modal-z-index: 4;
+
+$form-input-bg-color: white;
+$form-input-color: $text-color;
+
+$btn-bg-color: $white-grey;
+$btn-color: $blue-light;
+
+$submit-btn-bg-color: $blue;
+$submit-btn-color: white;
+
+$disabled-submit-btn-bg-color: $light-grey;
+
+$border-color: fade-out($submit-btn-bg-color, .3);
+
+$view-bg-color: #E7E7E8;
+
+$stripe-red: #DD4C50;
+$stripe-blue: #3686F2;
+$loading-red: #d50000;
+$loading-blue: rgb(0, 207, 255);

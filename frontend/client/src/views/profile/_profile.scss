@@ -1,0 +1,139 @@
+px-profile {
+  background-color: #F8F8F8;
+  width: 81%;
+  height: 100%;
+  @include screen(desktop){
+    width: 40%;
+  }
+}
+
+$img-dim: 40px;
+// 1. Brings the header above the address below
+profile-header {
+  @include display-flex;
+  padding: 1em;
+  position: relative; // 1.
+  z-index: 1; // 1.
+  @include px-shadow;
+  background-color: #F5F5F5;
+
+  .photo {
+    margin-right: 1em;
+    width: $img-dim;
+    height: $img-dim;
+  }
+}
+
+
+.cc-icon {
+  max-width: 20px;
+}
+
+
+$opacity: .3;
+address-bg {
+  background: airmail-stripe($opacity);
+  padding: .65em 0;
+}
+
+
+address {
+  @include px-shadow(.1);
+  font-size:.8em;
+  font-weight: normal;
+  font-style: normal;
+  background-color: white;
+  position: relative;
+  padding:2em 1.3em
+}
+
+sent-notes {
+  @include px-shadow;
+  
+}
+
+
+address p{
+  margin:.2em 0;
+}
+
+
+address img {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+}
+
+
+address info {
+  margin-bottom: .7em;
+  font-style: italic;
+  color: #777;
+}
+
+
+realname {
+  font-weight: normal;
+}
+
+
+px-profile .btn{
+  width: auto;
+  padding: .7em 1em;
+  background-color: transparent;
+  border-bottom: 1px solid #D6D6D6;
+  color: #303030;
+  box-shadow: 0 0 0;
+  font-weight: lighter;
+  font-size: 1.3em;
+  @include display-flex;
+  align-items: center;
+  @include justify-content(space-between);
+}
+
+
+logout.btn {
+  font-weight: lighter;
+  color: #999;
+  border-bottom: 0;
+  text-shadow: none;
+}
+
+px-profile px-signature {
+  padding: .8em;
+  width: calc(100% - 1.6em);
+  pixiname {
+    font-weight: normal;
+  }
+  @include px-shadow;
+}
+
+// WIP note stack icon in html/css
+/* $border-width: 4px; */
+/* .note-stack { */
+/*   position: relative; */
+/*   note { */
+/*     left { */
+/*       background-color: lighten(rgb(0,0,0), .5); */
+/*       border: $border-width solid darken(rgb(255, 255, 255), .1); */
+/*     } */
+/*     right { */
+/*       background-color: darken(rgb(255, 255, 255), .1); */
+/*       border: $border-width solid lighten(rgb(0, 0, 0), .1); */
+/*     } */
+/*   } */
+/* } */
+/*   <icon class='note-stack'> */
+/*     <note> */
+/*       <left></left><right></right> */
+/*       <note> */
+/*         <left></left><right></right> */
+/*         <note> */
+/*           <left></left><right></right> */
+/*         </note> */
+/*       </note> */
+/*     </note> */
+/*   </icon> */
+
+
+

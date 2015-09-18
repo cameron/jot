@@ -1,0 +1,31 @@
+// 1. Stems from my excessive use of custom tags
+// which I almost always want to be block elements. 
+* {
+  display: block; // 1.
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @include user-select('text');
+}
+
+
+// 1. See above.
+b, big, i, small, tt, abbr, acronym, cite, code, dfn, em, kbd, strong, samp, var, a, bdo, br, img, map, object, q, script, span, sub, sup, button, input, label, select, textarea{
+  display: inline; // 1.
+}
+
+
+// 1. See above.
+head {
+  display: none; // 1.
+}
+
+
+html, body{
+  margin: 0;
+  padding: 0;
+  font-family: $font-family;
+  font-weight: lighter;
+  color: $text-color;
+  background-color: #808285;
+  height: 100%;
+  overflow: hidden;
+}

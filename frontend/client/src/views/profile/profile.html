@@ -1,0 +1,33 @@
+<px-signature ng-click="updateSignature()"></px-signature>
+
+<address-bg ng-click="updateAddress();">
+  <address>
+    <info>Pixinotes to <pixiname class="inline">*{{user.name}}</pixiname> deliver to:</info>
+    <p>{{ user.address.street1 }}</p>
+    <p>{{ user.address.street2 }}</p>
+    <p>{{ user.address.city }}, {{ user.address.state}} {{ user.address.zip5}}</p>
+    <img src='views/app/mailbox.png'/>
+  </address>
+</address-bg>
+
+
+<sent-notes class="btn"
+            ng-click="sentNotes()">
+  Sent Notes
+</sent-notes>
+
+<card class="btn"
+      ng-click="updateCard()">
+  {{ user.card.last4 ? 'Bill card: ' + user.card.last4 : 'Add a credit card'}}
+</card>
+
+<invite class="btn"
+        ng-click="invite()">
+  Invite Friends
+</invite>
+
+<logout class="btn"
+        ng-if="user.name"
+        ng-click="user.logout()">
+  Log Out
+</logout>

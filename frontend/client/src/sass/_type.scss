@@ -1,0 +1,49 @@
+@import "webfonts/helvetica-neue/helvetica-neue";
+@import "webfonts/ss-pika/ss-pika";
+
+h1, h2, h3, h4 {
+  @include user-select('none');
+}
+
+
+// view controller titles
+h1 {
+  text-transform: uppercase;
+  letter-spacing: .18em;
+}
+
+
+h2 {
+  text-transform: none;
+  font-weight: lighter;
+  letter-spacing: inherit;
+}
+
+
+info-text, .info-text {
+  font-weight: lighter;
+  color: #777;
+}
+
+
+pixiname {
+  color: red;
+  font-weight: bold;
+}
+
+
+realname {
+  color: black;
+}
+
+
+// trademark
+tm {
+  display: inline;
+  font-size: .4em;
+  position: relative;
+  top: -.8em;
+  text-transform: uppercase;
+}
+
+

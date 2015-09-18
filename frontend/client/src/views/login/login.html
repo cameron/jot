@@ -1,0 +1,42 @@
+<error ng-show="facebookTokenError">There was an error logging in with facebook.</error>
+<form name="login" novalidate>
+  <fb-login ng-click="fbLogin()">
+    <icon><f>f</f></icon>
+    <text ng-show="!loggingInFB">Login with Facebook</text>
+    <px-loading class="white" ng-show="loggingInFB"></px-loading>
+  </fb-login>
+  <p>Or...</p>
+  <position-relative> <!-- for the pixiname-asterisk positioning -->
+    <input type="text"
+           class="pixiname"
+           placeholder="pixiname"
+           name="name"
+           required
+           ng-model="name"
+           ng-focus="badCombo = false"
+           ng-disabled="pending">
+    <pixiname-asterisk>*</pixiname-asterisk>
+  </position-relative>
+
+  <password>
+    <input type="password"
+           name="password"
+           required
+           placeholder="Password"
+           ng-focus="badCombo = false"
+           ng-model="password"
+           ng-disabled="pending">
+    <forgot ng-click="forgotPass()">Forgot?</forgot>
+    <error ng-show="badCombo">looks like you mistyped your username or password</error>
+  </password>
+
+  </error>
+
+  <px-submit click="pxLogin()" value="'Log In'"></px-submit>
+
+  <px-hr></px-hr>
+  New to Pixinote?
+  <create-account class="link" ng-click="createAccount()">
+    Create new account
+  </create-account>
+</form>

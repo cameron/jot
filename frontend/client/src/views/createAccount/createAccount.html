@@ -1,0 +1,44 @@
+<form name="account" novalidate class="scrollable-content">
+
+  <!-- TODO dedupe with the add-pixi-by-pixiname input -->
+  <input type="text"
+         class="email"
+         ng-model="user.email"
+         autocomplete="off"
+         placeholder="email"
+         type="email"
+         name="email"
+         px-ensure-unique-email="account.email"
+         ng-minlength="1"
+         ng-maxlength="255"
+         ng-model-options="{ debounce: 500 }"
+         required>
+  <error ng-show="account.email.$error.pattern">
+    Emails...
+  </error>
+  <error ng-show="account.email.$error.minlength">
+    Emails must be at least 2 characters.
+  </error>
+  <error ng-show="account.email.$error.maxlength">
+    Emails are fewer than 15 characters.
+  </error>
+  <error ng-show="account.email.$error.unique">
+    That email is already in use.
+  </error>
+
+  <input type="password"
+         placeholder="Password"
+         name="password"
+         ng-model="user.password"
+         ng-minlength="4"
+         ng-show="!user.fbId"
+         ng-required="!user.fbId">
+  <error ng-show="account.password.$error.minlength">
+    passwords must be at least 4 characters.
+  </error>
+
+  <input type="submit"
+         ng-disabled="account.$invalid || account.$pending"
+         ng-click="next()"
+         value="Next">
+</form>

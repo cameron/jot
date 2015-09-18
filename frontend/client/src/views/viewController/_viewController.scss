@@ -1,0 +1,120 @@
+$title-bar-height-mobile: 46px;
+$title-bar-height-desktop: 60px;
+
+px-view-controller {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include px-shadow;
+  @include px-transition;
+  @include px-background;
+  @include display-flex;
+  @include flex-direction-column;
+  @include px-transition;
+  z-index: 3;
+
+  title-view {
+    @include display-flex;
+    @include flex-direction-column;
+    @include justify-content(center);
+  }
+}
+
+
+px-view-controller.hide-title-bar {
+  @include transform(translateY(-$title-bar-height-mobile));
+  bottom: -$title-bar-height-mobile; // 1.
+  @include screen(desktop){
+    @include transform(translateY(0));
+    bottom: 0;
+  }
+}
+
+
+.reveal-sidebar {
+  @include transform(translate3d(81%, 0, 0));
+  @include screen(desktop){
+    @include transform(translate3d(40%, 0, 0));
+  }
+}
+
+
+.reveal-sidebar > * {
+  opacity: .5;
+}
+
+
+title-bar {
+  @include display-flex;
+  @include flex(0 0 $title-bar-height-mobile);
+  color: $text-color-nav;
+  @include px-shadow;
+  @include justify-content(space-between);
+  background-color: white;
+  z-index: 2;
+  @include screen(desktop){
+    @include flex(0 0 $title-bar-height-desktop);
+    font-size: 1.32em;
+  }
+}
+
+/* A view controller's title.
+
+   1. Make space for left and right buttons.
+
+   2. Margin to prevent the relatively positioned h1 from obscuring pointer
+   events on the left-floated button. 
+*/
+title-bar h1 {
+  font-size: .95em;
+  text-align: center;
+  @include flex(1 0 auto);
+  margin: 1em 0;
+}
+
+
+title-bar left-btn, title-bar right-btn {
+  cursor: pointer;
+  padding: 0 1em 0em .6em;
+  color: $disabled-submit-btn-bg-color;
+  @include display-flex;
+  @include flex-direction-column;
+  @include justify-content(center);
+}
+
+
+left-btn, right-btn {
+  min-width: 3.3%;
+}
+
+left-btn svg, right-btn svg {
+  fill: $light-grey;
+}
+
+left-btn:hover svg, right-btn:hover svg {
+  fill: $blue-light;
+}
+
+
+px-view-controller content {
+  @include display-flex;
+  @include flex-direction-column;
+  @include flex(1 1 auto);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+
+px-view-controller .reveal-sidebar content {
+  pointer-events: none;
+}
+
+
+img-wrapper {
+  @include display-flex;
+  @include flex-direction-column;
+  @include justify-content(center);
+}

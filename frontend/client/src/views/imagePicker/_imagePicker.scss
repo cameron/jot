@@ -1,0 +1,92 @@
+px-image-picker {
+  overflow: hidden;
+  background: white;
+
+  wrapper {
+    height: 100%;
+  }
+
+  input {
+    display: none;
+  }
+
+  img.picked {
+    max-width: none;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .2;
+  }
+
+  // 1. Keeps it from displacing the image
+  image-status {
+    text-align: center;
+    font-size: .9em;
+    font-weight: normal;
+    pointer-events: none;
+    position: absolute; // 1.
+    width: 80%;
+    padding: 10%;
+    z-index: 2;
+  }
+
+  image-status.loading {
+    padding-top: 4em;
+    position: relative;
+  }
+
+  image-status.pristine {
+    font-size: 5em;
+    margin-top: 23%;
+    color: white;
+    text-shadow: $text-shadow;
+
+    img.icon {
+      position: relative;
+      max-width:1.2em;
+      z-index: 2;
+      @include screen(desktop){
+        max-width: 100000%;
+        width: 56%;
+      }
+    }
+
+  }
+
+  img.placeholder {
+    @include vendor-prefix(filter, blur(5px));
+    position: absolute;
+    top: -8%;
+    left: -15%;
+    width: 116%;
+    z-index: 1;
+    opacity: .7;
+  }
+
+  image-status.dimension-error {
+    font-size: 1.3em;
+    padding-top: 10%;
+    color: white;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, .3);
+  }
+
+  rollover {
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &:hover rollover{
+    background-color: rgba(0, 0, 0, .4);
+  }
+  
+}
+

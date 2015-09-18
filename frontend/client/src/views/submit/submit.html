@@ -1,0 +1,8 @@
+<px-submit-w>
+  <input type="submit"
+         value="{{ (isSubmitting || form.$pending) ? '' : value }}"
+         ng-click="pxSubmit()"
+         ng-class="{pending: isSubmitting}"
+         ng-disabled="(!form.$valid || isSubmitting) || disabled"/>
+  <px-loading ng-show="isSubmitting || form.$pending" class="white"></px-loading>
+</px-submit-w>

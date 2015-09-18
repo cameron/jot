@@ -1,0 +1,179 @@
+@mixin vendor-prefix($property, $value, $also-vendor-prefix-value: false) {
+
+  @if $also-vendor-prefix-value {
+    -webkit-#{$property}: -webkit-#{$value};
+     -khtml-#{$property}: -khtml-#{$value};
+       -moz-#{$property}: -moz-#{$value};
+        -ms-#{$property}: -ms-#{$value};
+         -o-#{$property}: -o-#{$value};
+            #{$property}: #{$value};
+
+  } @else {
+    -webkit-#{$property}: #{$value};
+     -khtml-#{$property}: #{$value};
+       -moz-#{$property}: #{$value};
+        -ms-#{$property}: #{$value};
+         -o-#{$property}: #{$value};
+            #{$property}: #{$value};
+  }
+}
+
+@mixin transform($params) {
+  @include vendor-prefix('transform', $params);
+}
+
+@mixin transition($params) {
+  @include vendor-prefix('transition', $params, true);
+}
+
+@mixin animation($params) {
+  @include vendor-prefix('animation', $params);
+}
+
+@mixin animation-name($params) {
+  @include vendor-prefix('animation-name', $params);
+}
+
+@mixin animation-duration($params) {
+  @include vendor-prefix('animation-duration', $params);
+}
+
+@mixin animation-iteration-count($params) {
+  @include vendor-prefix('animation-iteration-count', $params);
+}
+
+@mixin animation-timing-function($params) {
+  @include vendor-prefix('animation-timing-function', $params);
+}
+
+@mixin background-gradient($startColor: #3C3C3C, $endColor: #999999) {
+    background-color: $startColor;
+    background-image: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
+    background-image: -webkit-linear-gradient(top, $startColor, $endColor);
+    background-image:    -moz-linear-gradient(top, $startColor, $endColor);
+    background-image:     -ms-linear-gradient(top, $startColor, $endColor);
+    background-image:      -o-linear-gradient(top, $startColor, $endColor);
+    background-image:         linear-gradient(top, $startColor, $endColor);
+    filter:            progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$startColor}', endColorStr='#{$endColor}');
+}
+
+@mixin user-select($value) {
+  @include vendor-prefix('user-select', $value)
+}
+
+@mixin display-flex {
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+}
+
+@mixin flex-width($value) {
+  @include vendor-prefix('flex', $value);
+  -webkit-box-flex: $value;
+  -moz-box-flex: $value;
+}
+
+@mixin flex-direction-column() {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@mixin flex($value) {
+  @include vendor-prefix('flex', $value);
+}
+
+// Pixinote specific mixins
+
+@mixin px-background(){
+  background: $view-bg-color;
+}
+
+@mixin px-transition(){
+  @include transition(all $animation-duration ease-in-out)
+}
+
+@mixin px-shadow($opacity: .3) {
+  box-shadow: 0 0 6px rgba(0, 0, 0, $opacity);
+} 
+
+@mixin button {
+  &:active {
+    background-color: transparentize($btn-bg-color, .2);
+  }
+  background-color: $btn-bg-color;
+  font-weight: lighter;
+  font-size: 1.3em;
+  color: $btn-color;
+  width: 90%;
+  padding: .7em inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+@mixin screen($media){
+  // http://screensiz.es/phone
+  @if $media == mobile-landscape {
+    @media only screen and (min-width: 415px) and (max-width: 767px){
+      @content; 
+    }
+  }
+  @else if $media == desktop {
+    @media only screen and (min-width: 768px) {
+      @content; 
+    }
+  }
+}
+
+@mixin keyframes ($animation_name) {
+    @-webkit-keyframes $animation_name {
+        @content;
+    }
+ 
+    @-moz-keyframes $animation_name {
+        @content;
+    }
+ 
+    @-o-keyframes $animation_name {
+        @content;
+    }
+ 
+    @keyframes $animation_name {
+        @content;
+    }
+}
+
+$interval: 100ms;
+$num-items: 5;
+@for $i from 0 to $num-items {
+  .delay-#{$i} {
+    @include vendor-prefix('animation-delay', $i * $interval !important);
+  }
+}
+
+@mixin justify-content($val) {
+  @include vendor-prefix(justify-content, $val);
+}
+
+.inline{
+  display: inline;
+}
+
+$lightness: .7;
+@function airmail-stripe($opacity, $thickness: 20px){
+  @return repeating-linear-gradient(
+    45deg,
+    lighten(rgba($stripe-red, $opacity), $lightness),
+    lighten(rgba($stripe-red, $opacity), $lightness) 1 * $thickness,
+    lighten(rgba($stripe-blue, 0), $lightness) 1 * $thickness,
+    lighten(rgba($stripe-blue, 0), $lightness)  2 * $thickness,
+    lighten(rgba($stripe-blue, $opacity), $lightness)  2 * $thickness,
+    lighten(rgba($stripe-blue, $opacity), $lightness)  3 * $thickness,
+    lighten(rgba($stripe-blue, 0), $lightness)  3 * $thickness,
+    lighten(rgba($stripe-blue, 0), $lightness)  4 * $thickness
+  );
+} 
+

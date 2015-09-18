@@ -1,0 +1,20 @@
+#! /bin/bash
+
+# Run gulp watch in an infinite loop, playing a sound when "finished"
+# appears in the output, and another when gulp crashes
+
+export $(cat ../env.dev | xargs)
+gulp clean
+while true
+do 
+    gulp watch | while read line
+    do 
+        if [[ $line == *"Finished"* ]]; then
+            afplay  /System/Library/Sounds/Pop.aiff
+        fi
+        echo $line
+    done 
+    test $? -gt 128 && break
+    afplay /System/Library/Sounds/Hero.aiff
+    sleep 5
+done

@@ -1,0 +1,17 @@
+px-current-credit-card {
+  position: relative;
+}
+
+card-info {
+  position: absolute;
+  top: -8%;
+  left: 3%;
+  padding: .5em 1em; // shared with form input
+}
+
+cc-icon {
+  position: relative;
+  top: 2px;
+}
+
+

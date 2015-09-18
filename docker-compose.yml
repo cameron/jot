@@ -1,0 +1,36 @@
+db:
+    build: ./db
+    volumes:
+        - ./volumes/postgres-data:/var/lib/postgresql/9.3/main
+    command: /bin/sh /start
+    ports:
+      - 5432:5432
+
+redis:
+    build: ./redis
+    volumes:
+        - ./volumes/redis-snaps:/redis-snaps
+    command: /usr/local/bin/redis-server /redis.conf
+
+server:
+    build: ./server
+    volumes:
+        - ./volumes/logs:/logs
+        - ./volumes/docs:/docs
+    links:
+        - db:db
+        - redis:redis
+    command: /srv/app/routes.py
+    volumes:
+      - /srv/app/:/home/core/share/jot/server/src
+    ports:
+      - 8080:8000
+
+frontend:
+    build: ./frontend
+    ports:
+      - 8000:80
+    links:
+      - server:server
+    volumes:
+      - /home/core/share/jot/frontend/client:/webclient

@@ -1,0 +1,9 @@
+#! /bin/bash
+
+# ssh tunnel to vm and ngrok to world
+
+ssh -nNT -L *:8000:12.12.12.12:8000 core@coreos-vm &
+ngrok -subdomain pixidev 8000
+
+# kill the ssh tunnel on exit
+ps aux | grep "ssh -nNT" | grep -v grep | awk '{ print $2 }' | xargs kill

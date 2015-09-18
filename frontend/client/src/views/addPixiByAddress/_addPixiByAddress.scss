@@ -1,0 +1,12 @@
+delete.delete-pixi {
+  margin-top: 1em;
+}
+
+delete.delete-pixi.confirming {
+  @include confirm-destructive;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: none;
+  padding: .7em;
+  margin: 1em;
+}

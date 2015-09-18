@@ -1,0 +1,22 @@
+/*
+ * send button and payment info 
+ */
+
+
+$padding: 2em;
+send-btn {
+  text-align: center;
+  padding: .7em 0 !important;
+  @include px-transition;
+  @include flex(0 0 auto);
+}
+
+send-btn .icon{
+  position: relative;
+  top: .15em;
+  left: .15em;
+}
+
+.payment-info {
+  margin-top: 1em;
+}

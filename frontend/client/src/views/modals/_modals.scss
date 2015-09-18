@@ -1,0 +1,59 @@
+/*
+ * Modals 
+ */
+ 
+px-modals {
+  position: absolute;
+  z-index: $modal-z-index;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include transform(translate3d(0, -100%, 0));
+}
+
+.modal-vc {
+  @include transition(all $animation-duration ease-out);
+  @include transform(translate3d(0, 200%, 0));
+}
+
+.modal-vc.show {
+  @include transform(translate3d(0, 100%, 0));
+}
+
+simple-confirm {
+  opacity: 0;
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100;
+  background-color: rgba(0, 0, 0, .2);
+  @include px-transition;
+  @include transform(translate(0, 80%));
+  z-index: 4; 
+}
+
+simple-confirm.show {
+  @include transform(translateY(100%));
+  display: block;
+  opacity: 1;
+}
+
+contents {
+  padding: 2em 1.5em;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  background-color: white;
+  border-radius: .11em;
+  @include px-transition;
+  margin: 20% 10% 0 10%;
+}
+
+simple-confirm button {
+  
+}
+
+simple-confirm.show contents {
+  margin-top: 30%;
+}

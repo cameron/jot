@@ -1,0 +1,45 @@
+<wrapper px-pinch-and-drag-mask
+         ng-click="pickImage({elementClick: true})">
+
+  <rollover ng-show="!(dataUrl || initialSrc)"></rollover>
+
+  <image-status class="loading"
+                ng-if="loadingImage">
+    <px-loading class="white"></px-loading>
+  </image-status>
+
+  <image-status class="pristine {{ iconClass }}"
+                ng-if="!(dimensionError || dataUrl || initialSrc || loadingImage)">
+    <img class="icon" ng-src="views/compose/camera.shadow.png"/>
+  </image-status>
+
+  <image-status class="dimension-error"
+                ng-if="dimensionError && !loadingImage">
+    <info>Small images won't print so well.</info><br>
+    <info>Select a photo that is at least 686x723 pixels.</info>
+  </image-status>
+
+  <img ng-show="dimensionError || loadingImage || !(dataUrl || initialSrc)"
+       class="placeholder"
+       ng-src="views/compose/default.note.photo.jpg"/>
+
+  <!-- the inspector chokes hard on image data urls -->
+  <hide-me-from-the-inspector>
+    <canvas ng-if="debugRect"></canvas>
+    <img class="picked"
+         px-pinch-and-drag="rect"
+         px-scroll-zoom="scrollZoom"
+         ng-src="{{ dataUrl || initialSrc }}"
+         ng-show="dimensionError === false &&
+                  !loadingImage &&
+                  (dataUrl || initialSrc)"
+         px-load="imageLoaded($event)">
+  </hide-me-from-the-inspector>
+
+  <input class="pick-image-input"
+         type="file"
+         accept="image/*"
+         px-read-file-into="file"
+         px-read-data-url-into="dataUrl"
+         px-loading-data-url-flag="loadingImage">
+</wrapper>

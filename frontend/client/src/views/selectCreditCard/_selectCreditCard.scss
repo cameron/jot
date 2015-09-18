@@ -1,0 +1,15 @@
+.ccs {
+  list-style: none; 
+  margin: 0;
+  padding: 0;
+}
+
+.cc {
+  padding: .7em 1em;
+  border-bottom: $border-color;
+}
+
+.cc.selected {
+  background-color: rgba(0, 0, 0, .2);
+}
+

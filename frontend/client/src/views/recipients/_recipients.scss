@@ -1,0 +1,229 @@
+
+px-recipients {
+  @include display-flex;
+  @include flex-direction-column;
+  @include flex(0 0 auto);
+  background-color: white;
+  @include screen(desktop){
+    background-color: transparent;
+  }
+}
+
+
+// 1. Above address book
+recipients-input {
+  @include display-flex;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: black;
+  @include px-shadow;
+  position: relative;
+  z-index: 1; // 1
+  @include screen(desktop){
+    font-size: 1.4em;
+    background-color: white;
+  }
+}
+
+
+recipients-input:hover .to-label, recipients-input.next-action .to-label {
+  color: $blue-light;
+}
+
+.to-label {
+  position: relative;
+  top: 2px;
+}
+
+
+placeholder {
+  font-style: italic;
+  color: #CCC;
+  display: none;
+  font-size: .9em;
+  position: relative;
+  top: 5px;
+}
+
+recipients-input.next-action placeholder,
+recipients-input.empty:hover placeholder {
+  display: block;
+}
+
+recipients-input > * {
+  padding: .6em;
+  @include flex(0 0 auto);
+}
+
+
+recipients {
+  @include flex(1 1 auto);
+  font-weight: 100;
+  padding-left: 0;
+}
+
+recipient {
+  font-weight: normal;
+  color: $submit-btn-bg-color;
+  display: inline;
+}
+
+recipient.removing {
+  background-color: $submit-btn-bg-color;
+  color: $submit-btn-color;
+  padding: .1em .2em;
+}
+
+/* hide the input caret that otherwise lags behind the animation */
+.transitioning .recipient-search {
+  @include transform(scale(0));
+}
+
+.recipient-search {
+  transition: none;
+  width: 30%;
+  background-color: transparent;
+  border-color: transparent;
+  padding-left: 0;
+  outline: none;
+  font-size: inherit;
+  color: inherit;
+  font-weight: normals;
+  padding: 0;
+  margin: 0;
+}
+
+
+add-contact-arrow {
+  position: absolute;
+  right: .85em;
+  top: .7em;
+  -webkit-transform: rotate(27deg);
+  font-size: 1.2em;
+  color: $loading-red;
+  opacity: .4;
+  @include animation(bob 800ms ease-in-out infinite alternate);
+}
+
+@include keyframes(bob) {
+  to {
+    @include transform(translateY(7px) rotate(27deg));
+    color: $loading-blue;
+  }
+}
+
+add-contact {
+  @include display-flex;
+  @include flex-direction-column;
+  @include justify-content(center);
+}
+
+// 1. Keeps the element from adding to the height of px-recipients.
+address-book {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  position: absolute; // 1.
+  @include screen(desktop){
+    background-color: transparent;
+  }
+}
+
+
+contacts-list.scrollable-content {
+  height: auto;
+  max-height: 45%;
+}
+
+
+$contact-li-border: 1px solid hsl(0, 0, 88%);
+contact-li {
+  cursor: pointer;
+  background-color: white;
+  border-bottom: $contact-li-border;
+  color: #222;
+  @include display-flex;
+  @include vendor-prefix('align-items', 'center');
+  @include vendor-prefix('justify-content', 'center');
+}
+
+contact-li > * {
+  padding: .7em;
+}
+
+
+contact-li.selected {
+  background-color: #EEE;
+}
+
+
+contact-photo {
+  width: 30px;
+  height: 30px;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+
+contact-photo icon {
+  color: #999;
+  position: relative;
+  top: .3em;
+}
+
+
+contact-id {
+  @include flex(1 0 auto);
+}
+
+
+/* 1. This selector is the result of the px-* directive pattern, 
+   which includes the <el px-view="expr"> form. Because the 
+   widget is not always reference as an element, it's impossible to nest
+   all widget styles within an element selector, thus scoping them to the element
+   and preventing bleeding into other elements. 
+
+   In this case, delete is used as an element name in the update contact modal,
+   and thus must be scoped to avoid interference. 
+
+   Gross. 
+ */
+address-book edit, address-book delete { // 1.
+  color: hsl(0, 0, 80%);
+  cursor: pointer;
+}
+
+address-book delete.confirm {
+  @include confirm-destructive;
+  margin-right: 1em;
+}
+
+
+loading {
+  text-align: center;
+  margin-top: 2em;
+}
+
+
+no-contacts {
+  width:85%;
+  margin: 5em auto;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+
+no-contacts h3 {
+  color: #CCC;
+}
+
+contact-li.back-link {
+  padding: 3em;
+  border-bottom: 0;
+  color: $light-grey;
+  @include screen(desktop){
+    border-bottom: $contact-li-border;
+  }
+}

@@ -1,0 +1,14 @@
+<title-bar>
+  <left-btn ng-click="leftBtnClick()">
+    <i ng-if="leftBtnClass" class="{{ leftBtnClass }}"></i>
+    <view ng-if="leftBtnView" px-view="leftBtnView"></view>
+  </left-btn>
+
+  <h1 ng-if="title">{{ title }}</h1>
+
+  <title-view ng-if="titleView" px-view="titleView"></title-view>
+
+  <right-btn ng-click="rightBtnClick()"
+             px-view="rightBtnView"></right-btn>
+</title-bar>
+<content ng-transclude></content>

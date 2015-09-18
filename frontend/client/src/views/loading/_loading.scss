@@ -1,0 +1,65 @@
+@include keyframes('flip') {
+  0% {
+    @include transform(perspective(120px) rotateX(0deg) rotateY(0deg));
+  }
+  
+  50% {
+    @include transform(perspective(120px) rotateX(-180.1deg) rotateY(0deg));
+  }
+  
+  100% {
+    @include transform(perspective(120px) rotateX(-180deg) rotateY(-180deg));
+  }
+
+}
+
+px-loading {
+  @include display-flex;
+  width:40%;
+  margin: 3em auto;
+  @include vendor-prefix(justify-content, space-between);
+}
+
+
+
+$square-width: 15px;
+square {
+  width: $square-width;
+  height: $square-width;
+  perspective: 12000;
+}
+
+.flipper {
+  margin: auto 0;
+  position: relative;
+  opacity: .4;
+  @include animation-duration(1.2s);
+  @include animation-iteration-count(infinite);
+  @include animation-timing-function(ease-in-out);
+  @include vendor-prefix('transform-style', preserve-3d);
+}
+
+px-loading.animate .flipper {
+  @include animation-name(flip);
+}
+
+front,
+back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  background-color: $loading-red;
+  height: 100%;
+  width: 100%;
+}
+
+back {
+    background-color: $loading-blue;
+    z-index: 800;
+    transform: rotateY(-180deg);
+}
+
+.white square > back, .white square > front {
+      background-color: white;
+}
