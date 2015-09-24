@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('sentNotes', ['$scope', 'user', 'Note', function($scope, user, Note){
 

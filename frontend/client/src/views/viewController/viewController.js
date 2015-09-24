@@ -1,7 +1,7 @@
-angular.module('pixinote')
+angular.module('jot')
 .view('viewController', {
   link: function(scope, el, attrs){
-    var module = angular.module('pixinote');
+    var module = angular.module('jot');
 
     // See lib/linkOnlyDirective.js
     // (verdict: this is unnecessarily verbose. move back to markup, somehow,

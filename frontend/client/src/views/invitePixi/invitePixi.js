@@ -1,4 +1,4 @@
-angular.module('pixinote').view('invitePixi',
+angular.module('jot').view('invitePixi',
   ['$scope',
     'user',
     function($scope, user){

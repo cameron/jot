@@ -173,7 +173,7 @@ stream('html.js', {
   src: ['src/*/**/*.html'],
   ops: [
     cache.bind(null, 'templates'),
-    ngTemplates.bind(null, {module: 'pixinote'}),
+    ngTemplates.bind(null, {module: 'jot'}),
     remember.bind(null, 'templates'),
     concat,
     uglify

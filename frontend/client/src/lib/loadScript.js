@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 .service('loadScript', ['$q', function($q){
   return function(url){
     var d = $q.defer();

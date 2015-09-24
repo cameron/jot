@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .directive('nameMustBeUnregistered', ['$q', 'api', '$parse', function($q, api, $parse){
   return {

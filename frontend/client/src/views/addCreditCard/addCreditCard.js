@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('addCreditCard', ['$scope', '$timeout', 'user', 'parseExpiry',
   function($scope, $timeout, user, parseExpiry){

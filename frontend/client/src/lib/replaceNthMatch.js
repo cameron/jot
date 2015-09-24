@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .service('replaceNthMatch', function(){
   // thank you http://stackoverflow.com/a/7958627pf

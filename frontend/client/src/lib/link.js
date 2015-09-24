@@ -1,5 +1,5 @@
 (function(){
-  var module = angular.module('pixinote')
+  var module = angular.module('jot')
   module.linkFns = {};
 
   /* For the sake of being able to compose some subset of directives without markup

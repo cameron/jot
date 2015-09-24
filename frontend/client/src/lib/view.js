@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .directive('pxView', ['$compile', function($compile){
   /* <div px-view="myView"></div> where scope.myView = 'login'
@@ -12,7 +12,7 @@ angular.module('pixinote')
    * Currently, does not support transference of attributes.
    */
 
-  var module = angular.module('pixinote');
+  var module = angular.module('jot');
 
   var insertView = function(scope, el, viewName){
     viewName = viewName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -62,7 +62,7 @@ angular.module('pixinote')
    * are defined with `view`.
    *
    */
-  var directiveCreator, directiveDef, module = angular.module('pixinote');
+  var directiveCreator, directiveDef, module = angular.module('jot');
 
   // an annotated directive definition maker
   if(isDirectiveCreator){

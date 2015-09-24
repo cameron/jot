@@ -1,2 +1,2 @@
-angular.module('pixinote')
+angular.module('jot')
 .view('pencil');

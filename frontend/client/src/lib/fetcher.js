@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .service('fetcher', ['$q', function($q){
   // It's common to ask for data while it's in the process

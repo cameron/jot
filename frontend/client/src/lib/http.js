@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .config(['$httpProvider', function($httpProvider){
   $httpProvider.defaults.headers.common.Accept = "application/vnd.pixinote.v1+json";

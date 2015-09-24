@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .service('htmlToNewlines', function(){
   /* A miserable hack for getting a string with newlines

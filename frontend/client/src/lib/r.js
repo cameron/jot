@@ -1,7 +1,7 @@
 // r.js
 // add-ons for $q promises
 
-angular.module('pixinote')
+angular.module('jot')
 
 .run(['$q', function($q){
   var p = $q.defer().promise;

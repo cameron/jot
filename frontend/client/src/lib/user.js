@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .run(['user',
   'facebookAppId',

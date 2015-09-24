@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .service('localStorage', function(){
   var getterSetter = function(key){

@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 .view('notes', ['$scope', 'user', 'modals', '$element', '$timeout',
   function($scope, user, modals, $element, $timeout){
     $element.on('click', function(e){

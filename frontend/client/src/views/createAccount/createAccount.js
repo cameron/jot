@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('createAccount', ['$scope', 'user', 'modals', function($scope, user, modals){
   $scope.user = user;

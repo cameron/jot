@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .service('parseExpiry', function(){
   return function(expiry){

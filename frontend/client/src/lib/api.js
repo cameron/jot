@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .service('api', ['$http', function($http){
   var api = function(method, config, url, params){

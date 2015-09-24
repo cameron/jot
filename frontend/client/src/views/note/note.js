@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('note', ['$scope', function($scope){
   $scope.note = $scope.modal.data.note;

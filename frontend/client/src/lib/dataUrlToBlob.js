@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 .service('dataUrlToBlob', function(){
   return function dataURItoBlob(dataURI) {
     // convert base64/URLEncoded data component to raw binary data held in a string

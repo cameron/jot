@@ -1,5 +1,5 @@
 
-angular.module('pixinote')
+angular.module('jot')
 
 
 .link('pxTransitionEnd', function(scope, element, attrs){

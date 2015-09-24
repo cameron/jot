@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('welcome', ['$scope', 'modals', 'user', '$q', function($scope, modals, user, $q){
   $scope.user = user;

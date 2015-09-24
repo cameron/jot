@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('sendConfirmation', ['$scope',function($scope){
   $scope.share = function(e){

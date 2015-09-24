@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('app',['$rootScope', '$scope', 'modals', 'user', '$element', 'finallyForget',
   function($rootScope, $scope, modals, user, $element, finallyForget){

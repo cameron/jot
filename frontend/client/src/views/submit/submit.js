@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .view('submit', ['$parse', '$q', '$timeout', function($parse, $q, $timeout){
   return {

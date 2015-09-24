@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 // two-way binding for a contenteditable div
 .directive('pxTextContent', [

@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 .view('send', ['$rootScope', '$scope', 'user', 'modals',
   function($rootScope, $scope, user, modals){
 

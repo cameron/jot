@@ -1,4 +1,4 @@
-angular.module('pixinote')
+angular.module('jot')
 
 .config(['$provide', function($provide){
  $provide.decorator('$exceptionHandler', ['$log', '$delegate',
