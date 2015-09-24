@@ -61,9 +61,10 @@ angular.module('pixinote')
     title: '@',
     rightBtnView: '@',
     rightBtnClick: '=?',
-    leftBtnClass: '@',
-    leftBtnView: '@',
+    rightBtnClass: '@',
     leftBtnClick: '=?',
+    leftBtnView: '@',
+    leftBtnClass: '@',
     modal: '=?'
   },
   transclude: true

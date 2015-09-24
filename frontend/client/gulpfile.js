@@ -236,6 +236,12 @@ file('index.html', {
   })]
 })
 
+file('jot.manifest', {
+  src: ['src/jot.manifest'],
+  ops: [
+    template.bind(null, {date: Date()})
+  ]
+})
 
 gulp.task('watch', ['build'], function(){
   dieOnError = true;

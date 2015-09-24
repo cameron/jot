@@ -1,6 +1,4 @@
-
 import databacon as db
-
 
 class User(db.Entity):
   email = db.lookup.alias()
@@ -25,4 +23,6 @@ class Tag(db.Node):
   tag = db.lookup.alias(uniq_to_parent=User)
   notes = db.relation(Note.tags) 
 
-
+  def __init__(self, tag_str):
+    super(Tag, self).__init__(tag_str)
+    self.tag(tag_str)

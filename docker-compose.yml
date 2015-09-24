@@ -13,6 +13,8 @@ redis:
     command: /usr/local/bin/redis-server /redis.conf
 
 server:
+    tty: true
+    stdin_open: true
     build: ./server
     volumes:
         - ./volumes/logs:/logs
@@ -22,7 +24,7 @@ server:
         - redis:redis
     command: /srv/app/routes.py
     volumes:
-      - /srv/app/:/home/core/share/jot/server/src
+      - /home/core/share/jot/server/src:/srv/app/
     ports:
       - 8080:8000
 

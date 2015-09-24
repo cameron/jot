@@ -1,0 +1,8 @@
+<textarea ng-model="note.value"
+          ng-debounce="2000"></textarea>
+<tags>
+  <tag ng-repeat="tag in tags">
+    tag.tag
+    <delete-tag ng-if="tag.confirmRemove" class="ss-delete"></delete-tag>
+  </tag>
+</tags>

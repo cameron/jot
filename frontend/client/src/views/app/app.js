@@ -4,11 +4,6 @@ angular.module('pixinote')
   function($rootScope, $scope, modals, user, $element, finallyForget){
     $scope.user = user;
 
-    $rootScope.resetNoteInputs = function(){
-      $rootScope.sent = false;
-      $rootScope.$broadcast('resetNoteInputs');
-    };
-
     $scope.hideSidebar = function(e){
       $scope.$broadcast('hideSidebar', e);
     }
@@ -22,10 +17,12 @@ angular.module('pixinote')
         }));
     }
 
-    $scope.help = function(){ window.location = '/'; }
+    $scope.newNote = function(){
+      modals.show('note', {note: user.newNote()});
+    }
 
     $scope.titleSrc = 'views/app/logo.png';
-    $scope.page = 'compose';
+    $scope.page = 'notes';
 
     $rootScope.isTouchScreen = 'ontouchstart' in document.documentElement ? 'tap' : 'click';
 

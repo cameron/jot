@@ -30,11 +30,11 @@
          placeholder="Password"
          name="password"
          ng-model="user.password"
-         ng-minlength="4"
+         ng-minlength="6"
          ng-show="!user.fbId"
          ng-required="!user.fbId">
   <error ng-show="account.password.$error.minlength">
-    passwords must be at least 4 characters.
+    passwords must be at least 6 characters.
   </error>
 
   <input type="submit"

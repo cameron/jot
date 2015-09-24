@@ -14,7 +14,7 @@ angular.module('pixinote')
         appId      : fbAppId,
         cookie     : true,
         xfbml      : true,
-        version    : 'v2.1'
+        version    : 'v2.4'
       });
 
       var fbLogin = FB.login.bind(FB);
@@ -37,7 +37,6 @@ angular.module('pixinote')
 
       user._getFbToken();
     };
-
 }])
 
 
@@ -50,7 +49,7 @@ angular.module('pixinote')
   'facebookAppId',
   'logger',
   'localStorage',
-  'dataUrlToBlob',
+  'fetcher',
   function(
     api,
     modals,
@@ -60,16 +59,16 @@ angular.module('pixinote')
     fbAppId,
     logger,
     localStorage,
-    dataUrlToBlob){
-
-    var User = function(){
-      localStorage.name() && this._didLogIn(localStorage.name(), true);
-      this.avatarRect = {};
-      var match = document.cookie.match(/inviter=([^;]*)/);
-      this.referrer = (match && match.length > 1) ? match[1] : undefined;
-    };
+    fetcher){
 
     var log = logger('fb', true);
+
+    var User = function(){
+      // try local storage to check for logged in status first
+      // (in case there is no network connectivity)
+      localStorage.guid() && this._didLogIn(localStorage.guid());
+    };
+
 
     /* account */
 
@@ -79,47 +78,24 @@ angular.module('pixinote')
         fb_id: this.fbId,
         fb_token: this.fbToken,
         email: this.email,
-      })
-             .success((function(){
-               this._didLogIn(this.name, false)
-             }).bind(this));
+      }).success((function(guid){
+        this._didLogIn(guid)
+      }).bind(this));
     };
-
-
-    User.prototype.setCreditCard = function(card){
-      var def = $q.defer()
-      Stripe.card.createToken(card, (function(code, res){
-        if(res.error){
-          def.reject(res.error.message);
-        } else {
-          api("post", '/users/' + this.name + '/cards', {
-            token: res.id
-          })
-          .success((function(card){
-
-            this.card = card;
-            def.resolve();
-          }).bind(this))
-          .error(def.reject);
-        }
-      }).bind(this))
-      return def.promise;
-    };
-
 
     /* login */
 
-    User.prototype.pxLogin = function(name, password){
+    User.prototype.pxLogin = function(email, password){
       log('login to pixinote');
 
-      return api('post', '/tokens', {
-        name: name,
+      return api('post', '/login', {
+        email: email,
         password: password || '',
         fb_id: this.fbId,
         fb_token: this.fbToken
       })
              .success((function(res){
-               this._didLogIn(res, true);
+               this._didLogIn(res);
              }).bind(this));
     };
 
@@ -217,220 +193,70 @@ angular.module('pixinote')
     }
 
 
-    User.prototype._didLogIn = function(name, fetchCard){
+    User.prototype._didLogIn = function(guid){
       delete this.password;
       this.loggedIn = true;
-      this.setName(name);
-      this.getDetails(fetchCard);
+      this.setGuid(guid);
+      this.getNotes();
+      this.getTags();
     }
 
 
     User.prototype.logout = function(){
-      this.setName();
-      localStorage.note('');
+      this.setGuid();
       return api("delete", "/tokens/current")
              .finally(window.location.reload.bind(window.location));
     };
 
 
     User.prototype.ensureLoggedIn = function(){
-      return $q.when(this.loggedIn || modals.show('login'))
+      return this.getSessionGuid().then((function(){
+        $q.when(this.loggedIn || modals.show('login'))
+      }).bind(this));
     };
 
-
-    User.prototype.setName = function(name){
-      this.name = name;
-      localStorage.name(name);
-      this.updateAvatarSrc();
-    }
-
-    User.prototype.updateAvatarSrc = function(){
-      this.avatarSrc = '/api/users/' + this.name + '/avatar?' + Date.now();
-      this.fullAvatarSrc = '/api/users/' + this.name + '/avatar/full?' + Date.now();
-    }
-
-
-    // It's common to ask for data while it's in the process
-    // of being fetched, or before it's possible to fetch it (e.g.,
-    // in the case that the user is not yet logged in).
-    //
-    // In either case, all we want is a promise that resolves when
-    // the data is available.
-    //
-    // That's what fetcher gives us.
-    //
-    var fetcher = function(fetch, shouldFetch, property){
-      var willFetchDefer, isFetchingPromise;
-      return function(){
-        if(property !== undefined && this[property]){
-          return $q.when(this[property]);
-
-        } else if(willFetchDefer && isFetchingPromise){
-          return willFetchDefer.promise;
-        }
-
-        willFetchDefer = willFetchDefer || $q.defer();
-
-        if(shouldFetch && !shouldFetch.apply(this) || isFetchingPromise){
-          return willFetchDefer.promise;
-        }
-
-        isFetchingPromise = fetch.apply(this, arguments)
-        isFetchingPromise.then(willFetchDefer.resolve, willFetchDefer.reject);
-        isFetchingPromise.finally(function(){
-          willFetchDefer = isFetchingPromise = null;
-        });
-        return isFetchingPromise;
-      }
-    }
-
-    User.prototype.getDetails = fetcher(function getDetails(alsoGetCard){
-      var usersUrl = '/users/' + this.name;
-      var reqs = [
-        api('get', usersUrl)
-
-        .success((function(user, code){
-          if(code == 204){ // means i'm not authd
-            this.logout();
-            return;
-          }
-          _.extend(this, user);
-        }).bind(this))
-
-        .error((function(res, code){
-          if(code == 403 || code == 404){
-            this.logout();
-          } else {
-            console.error(res, code);
-          }
-        }).bind(this)),
-
-        this.getContacts(),
-        this.getNote(),
-        this.getNotes()
-      ];
-
-      if(alsoGetCard){
-        reqs.push(api('get', usersUrl + '/cards/default')
-                  .success((function(card){
-                    this.card = card;
-                  }).bind(this)));
-      }
-
-      return $q.all(reqs)
-             .then(function(){
-
-             }, (function(res){
-               if(res.status == 403){
-                 this.logout();
-               }
-             }).bind(this));
-    }, function shouldFetch(){
-      return !!this.name;
+    User.prototype.getSessionGuid = fetcher(function getSessionGuid(){
+      return api('get', '/session')
+      .success((function(guid){
+        this._didLogIn(guid)
+      }).bind(this));
     });
 
+
+    User.prototype.setGuid = function(guid){
+      this.guid = guid;
+      localStorage.guid(guid);
+    }
 
     /* notes */
 
-    User.prototype._getFreshNote = function(){
-      return this.getNote(true);
-    }
+    User.prototype.newNote = function(){
+      // a placeholder so that the UX can proceed...
+      var placeholder = new Note();
 
-    User.prototype.getNote = fetcher(function getNote(fresh){
-      // a placeholder so that the interface is not blocked
-      var oldNote = this.note;
-      this.note = new Note();
-
-      return Note.get(fresh ? null : localStorage.note())
-             .then((function(note){
-
-               if(!note.placeholder){
-                 localStorage.note(note.id);
-               }
-
-               if(oldNote && oldNote.placeholder){
-                 note.imageData = oldNote.imageData;
-                 note.imageCropRect = oldNote.imageCropRect;
-                 note.text = oldNote.text;
-                 note.recipients = oldNote.recipients;
-               }
-
-               this.note = note;
-             }).bind(this));
-    });
-
-
-    User.prototype.sendNote = function(){
-      var note = this.note;
-      var promise = note.send();
-      promise.catch(function(){
-        this.note = note;
-      });
-      return promise;
-    }
-
-
-    User.prototype.getNotes = fetcher(function getNotes(){
-      return api('get', '/users/' + this.name + '/notes')
-             .success(function(notes){
-               this.notes = notes;
-             });
-    }, function shouldFetch(){
-      return !!this.name;
-    });
-
-    /* contacts */
-
-    User.prototype.deleteContact = function(nameOrId, nonMember){
-      _.remove(this.contacts, function(contact){
-        return contact[nonMember ? 'id' : 'name'] == nameOrId;
-      });
-      return api('delete', '/users/' + this.name + '/contacts' +
-          (nonMember ? '/mailbox/' : '/member/') + nameOrId)
-             .then(function(){},
-               function(res){
-                 if(res.status != 404){
-                   console.warn('unable to remove contact');
-                 }
-               });
-    }
-
-
-    User.prototype.updateContact = function(contact){
-      return api('post', '/users/' + this.name + '/contacts' +
-          '/mailbox/' + contact.id, contact);
-    }
-
-
-    User.prototype.addContact = function(nameOrAddress){
-      var contact;
-
-      if(typeof nameOrAddress == 'string'){
-        contact = {
-          name: nameOrAddress,
-          member: true
-        };
-      } else {
-        contact = nameOrAddress;
-        contact.member = false;
-      }
-
-      return api('post', '/users/' + this.name + '/contacts', contact)
-             .success((function(contact){
-               (this.contacts = this.contacts || []).push(contact);
-             }).bind(this));
+      Note.create(this.guid).then((function(note){
+        placeholder.convertPlaceholder(note);
+      }).bind(this));
+      this.notes.shift(placeholder);
+      return placeholder;
     };
 
 
-    User.prototype.getContacts = fetcher(function getContacts(){
-      return api('get', '/users/' + this.name + '/contacts')
-             .success((function(res){
-               this.contacts = res.contacts;
+    User.prototype.getNotes = fetcher(function getNotes(){
+      return api('get', '/users/' + this.guid + '/notes')
+             .success((function(notes){
+               this.notes = notes;
              }).bind(this));
     }, function shouldFetch(){
-      return !!this.name;
-    }, 'contacts');
+      return !!this.guid
+    });
 
+    User.prototype.getTags = fetcher(function getTags(){
+      return api('get', '/users/' + this.guid + '/tags')
+      .success((function(tags){
+        this.tags = tags;
+      }).bind(this));
+    });
 
     return new User();
   }])

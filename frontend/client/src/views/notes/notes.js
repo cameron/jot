@@ -1,5 +1,5 @@
 angular.module('pixinote')
-.view('recipients', ['$scope', 'user', 'modals', '$element', '$timeout',
+.view('notes', ['$scope', 'user', 'modals', '$element', '$timeout',
   function($scope, user, modals, $element, $timeout){
     $element.on('click', function(e){
       if(e.target.tagName == 'PX-RECIPIENTS' ||
@@ -16,8 +16,8 @@ angular.module('pixinote')
       document.body.scrollTop = 0;
     });
 
-    user.getContacts().then(function(){
-      $scope.contacts = user.contacts;
+    user.getNotes().then(function(){
+      $scope.notes = user.notes
     });
 
     $scope.$watch('showAddressBook', function(show, was){

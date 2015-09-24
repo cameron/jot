@@ -1,0 +1,10 @@
+CACHE MANIFEST
+# <%= date %>
+
+CACHE:
+js.js
+css.css
+
+NETWORK:
+*
+

@@ -8,7 +8,9 @@
 
   <title-view ng-if="titleView" px-view="titleView"></title-view>
 
-  <right-btn ng-click="rightBtnClick()"
-             px-view="rightBtnView"></right-btn>
+  <right-btn ng-click="rightBtnClick()">
+    <i ng-if="rightBtnClass" class="{{ rightBtnClass }}"></i>
+    <view ng-if="rightBtnView" px-view="rightBtnView"></view>
+  </right-btn>
 </title-bar>
 <content ng-transclude></content>

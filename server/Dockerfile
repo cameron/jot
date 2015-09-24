@@ -1,7 +1,7 @@
 from debian:wheezy
 
 RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get install -y gcc python-dev python-pip git procps curl libpq-dev
+RUN apt-get install -y gcc python-dev python-pip git procps curl libpq-dev libffi-dev
 
 RUN git clone https://github.com/teepark/greenhouse
 RUN cd greenhouse; python setup.py install

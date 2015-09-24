@@ -11,8 +11,7 @@ angular.module('pixinote')
   }
 
   var ls = {};
-  ls.name = getterSetter('pxLastLoggedInPixi');
-  ls.note = getterSetter('pxDraftNoteId');
-
+  ls.guid = getterSetter('jtLastLoggedInGuid');
+  ls.note = getterSetter('jtNote');
   return ls;
 });
