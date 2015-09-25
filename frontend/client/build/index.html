@@ -9,21 +9,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <style>
-      /* TODO replace this with an <!-- inline --> gulp plugin */
-      loading-app {
-        position: absolute;
-        z-index: 99999999999;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        text-align: center;
-        padding-top: 40vh;
-        background-color: #DEDEDE;
-        color: #777;
-        font-size: 2em;
-        font-family: "Helvetica Neue";
-      }
+      /* Injected inline into index.html to style the page as it loads */
+loading-app {
+  position: absolute;
+  z-index: 99999999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  padding-top: 40vh;
+  background-color: #DEDEDE;
+  color: #777;
+  font-size: 2em;
+  font-family: "Helvetica Neue";
+}
+
     </style>
     <link rel="stylesheet" href="css.css">
   </head>

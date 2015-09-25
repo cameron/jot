@@ -1,0 +1,15 @@
+/* Injected inline into index.html to style the page as it loads */
+loading-app {
+  position: absolute;
+  z-index: 99999999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  padding-top: 40vh;
+  background-color: #DEDEDE;
+  color: #777;
+  font-size: 2em;
+  font-family: "Helvetica Neue";
+}
