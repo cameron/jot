@@ -37,7 +37,13 @@ def check_session():
   return req.user.guid
 
 
-@post('/login', {
+@delete('/session')
+@require_login
+def logout():
+  clear_session()
+
+
+@post('/session', {
   'email': validate.email,
   'password': validate.password
 })

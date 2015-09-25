@@ -88,7 +88,7 @@ angular.module('jot')
     User.prototype.pxLogin = function(email, password){
       log('login to pixinote');
 
-      return api('post', '/login', {
+      return api('post', '/session', {
         email: email,
         password: password || '',
         fb_id: this.fbId,
@@ -204,8 +204,11 @@ angular.module('jot')
 
     User.prototype.logout = function(){
       this.setGuid();
-      return api("delete", "/tokens/current")
-             .finally(window.location.reload.bind(window.location));
+      if(this.loggedIn){
+        this.loggedIn = false;
+        return api("delete", "/session")
+               .finally(window.location.reload.bind(window.location));
+      }
     };
 
 
@@ -215,11 +218,17 @@ angular.module('jot')
       }).bind(this));
     };
 
+
     User.prototype.getSessionGuid = fetcher(function getSessionGuid(){
       return api('get', '/session')
-      .success((function(guid){
-        this._didLogIn(guid)
-      }).bind(this));
+             .success((function(guid){
+               if(!this.loggedIn){
+                 this._didLogIn(guid)
+               }
+             }).bind(this))
+             .error(function(){
+               this.logout();
+             }.bind(this));
     });
 
 
@@ -231,14 +240,9 @@ angular.module('jot')
     /* notes */
 
     User.prototype.newNote = function(){
-      // a placeholder so that the UX can proceed...
-      var placeholder = new Note();
-
-      Note.create(this.guid).then((function(note){
-        placeholder.convertPlaceholder(note);
-      }).bind(this));
-      this.notes.shift(placeholder);
-      return placeholder;
+      var note = new Note(null, this);
+      this.notes.shift(note);
+      return note;
     };
 
 

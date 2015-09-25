@@ -10,7 +10,7 @@ from app import app
 from schema import User
 
 
-__ALL__ = ['get', 'post', 'require_json', 'is_logged_in_as', 'require_login', 'optional', 'init_session', 'json_spec', 'req']
+__ALL__ = ['get', 'post', 'delete', 'require_json', 'is_logged_in_as', 'require_login', 'optional', 'init_session', 'json_spec', 'req', 'clear_session']
 
 
 class Request(object):
@@ -151,6 +151,11 @@ def init_session(user):
   session['expires'] = time.time() + 3600*24*30
 
 
+def clear_session():
+  del session['guid']
+  del session['expires']
+
+
 def method_route_decorator_factory(methods):
   ''' Returns a decorator that accepts a path argument and supplies the
   provided `methods` to flask.App.add_url_rule.
@@ -178,4 +183,4 @@ def method_route_decorator_factory(methods):
 
 get = method_route_decorator_factory('GET')
 post = method_route_decorator_factory('POST')
-
+delete = method_route_decorator_factory('DELETE')

@@ -11,42 +11,44 @@ angular.module('jot')
   function(api, $q, $rootScope, dataUrlToBlob, strToHash, localStorage, logger){
     var log = logger('note', true);
 
-    var Note = function(json){
+    var Note = function(json, parent){
       log('instantiating note', json);
-      this.placeholder = !json;
-      json = json || {};
-      this.id = json.id;
-
+      this.setJson(json);
+      this.parent = parent;
     };
+
+
+    Note.prototype.setJson = function(json){
+      json = json || {};
+      this.guid = json.guid;
+    }
+
+
+    Note.prototype.ensureExists = function(){
+      return $q.when(this.guid || this.create())
+    }
 
 
     Note.prototype.save = function(){
-      if(this.placeholder) return;
-
-      var lines = this.text.split('\n');
-      return api('put', '/notes/' + this.id, {
-        line1: lines[0],
-        line2: lines[1],
-        line3: lines[2],
-        image_from: this.imageFrom
-      })
-      .then((function(res){
-        this.setText(res.data);
-      }).bind(this));
+      return this.ensureExists().then(function(){
+        var lines = this.text.split('\n');
+        return api('put', '/notes/' + this.id, {
+          tags: this.tags,
+          text: this.text,
+        })
+               .then((function(res){
+                 this.setText(res.data);
+               }).bind(this));
+      }.bind(this));
     }
 
 
-    Note.create = function(user_id){
-      return api('post', '/users/' + user_id + '/notes')
-             .success(function(note){
-               return new Note(note)
-             });
+    Note.prototype.create = function(){
+      return api('post', '/users/' + this.parent.guid + '/notes')
+             .success((function(note){
+               this.setJson(note);
+             }).bind(this));
     };
-
-    Note.prototype.convertPlaceholder = function(note){
-      delete this.placeholder;
-      this.guid = note.guid;
-    }
 
     return Note;
   }])
