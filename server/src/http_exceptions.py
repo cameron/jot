@@ -22,8 +22,8 @@ class NotFound(HTTPException):
 
 
 class BadJson(BadRequest):
-  def __init__(self, spec):
-    msg = 'Invalid POST JSON. Expected %s' % spec.__repr__()
+  def __init__(self, spec, val, keypath=''):
+    msg = 'Invalid POST JSON. Expected %s, got %s at %s' % (str, val, keypath)
     super(BadJson, self).__init__(msg)
 
 

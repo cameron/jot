@@ -1,22 +1,12 @@
-<notes-list class="scrollable-content list-group">
-  <note-li ng-repeat="note in notes"
-           ng-click="editNote(note, $event)">
-    <contact-id>
-      <realname> {{ contact.realname }} </realname>
-      <pixiname ng-show="contact.name"> *{{ contact.name }}</pixiname>
-    </contact-id>
-    <edit class="ss-write"
-          ng-click="editContact(contact, $event)"
-          ng-show="!contact.member">&nbsp;</edit>
-    <delete class=""
-            ng-class="{'ss-delete': !contact.confirmingDeletion,
-                      confirm: contact.confirmingDeletion}"
-            ng-click="deleteContact(contact, $event)"
-            ng-show="contact.member">
-      {{ contact.confirmingDeletion ? 'remove': ''}}
-    </delete>
-  </note-li>
-</notes-list>
-
+<notes class="scrollable-content list-group"
+       ng-class="{'no-scroll': editing}">
+  <note ng-repeat="note in notes"
+        ng-class="{editing: note.editing}"
+        ng-click="editNote(note, $event)">
+    <textarea ng-click="editNote(note, $event)"
+              ng-model="note.text"
+              ng-model-options="{debounce: 2000}"></textarea>
+  </note>
+</notes>
 
 <px-loading ng-show="notes === undefined"></px-loading>

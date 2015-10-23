@@ -23,13 +23,13 @@ $btn-bg-color: $white-grey;
 $btn-color: $blue-light;
 
 $submit-btn-bg-color: $blue;
-$submit-btn-color: white;
+$submit-btn-color: $blue;
 
 $disabled-submit-btn-bg-color: $light-grey;
 
 $border-color: fade-out($submit-btn-bg-color, .3);
 
-$view-bg-color: #E7E7E8;
+$view-bg-color: white;
 
 $stripe-red: #DD4C50;
 $stripe-blue: #3686F2;

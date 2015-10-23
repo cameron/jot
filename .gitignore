@@ -6,3 +6,4 @@ id_rsa*
 server/docs
 frontend/client/node_modules
 frontend/client/src/.bower_components
+*tmux

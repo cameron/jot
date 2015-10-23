@@ -25,8 +25,9 @@ def create_account(email=None, password=None):
     raise exceptions.BadRequest("Email in use")
   
   user = User()
-  user.email(email)
-  user.password(bcrypt.hashpw(password, bcrypt.gensalt()))
+  user.email = email
+  user.password = bcrypt.hashpw(password, bcrypt.gensalt())
+  user.save()
   init_session(user)
   return user.guid
 
@@ -71,12 +72,11 @@ def notes(guid, start=0, limit=100):
   notes = req.user.notes(nodes=True, 
                              start=start,
                              limit=limit)
-
   return list(note.json() for note in notes)
   
 
 @post('/users/<int:uid>/notes/<int:nid>', {
-  optional('text'): str,
+  optional('text'): unicode, 
   optional('tags'): list
 })
 @require_login
@@ -84,7 +84,8 @@ def update_note(uid, nid, text=None, tags=None):
   is_logged_in_as(uid)
 
   note = Note.by_guid(nid)
-  note.value = text
+  if text:
+    note.value = text
 
   if tags:
     add_tags = set(tags)
@@ -107,8 +108,8 @@ def update_note(uid, nid, text=None, tags=None):
 def create_note(uid):
   is_logged_in_as(uid)
 
-  s = req.json.get('text', u'')
-  note = Note(s, parent=req.user)
+  text = req.json.get('text', u'')
+  note = Note(text, parent=req.user)
 
   tags = req.json.get('tags', [])
   for tag_str in tags:

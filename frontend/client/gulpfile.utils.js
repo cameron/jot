@@ -41,7 +41,7 @@
  *
  *   // (optional, file() only) override the default ./build/<name>
  *   // destination file.
- *   dest: '',
+ *   dest: ''
  * }
  *
  * */

@@ -9,12 +9,12 @@
 @import "style/type";
 @import "style/layout";
 
-/* TODO generate this in gulp using gulp-insert */
 /* Views */
 @import "views/modals/modals";
 @import "views/app/app";
 @import "views/send/send";
 @import "views/notes/notes";
+@import "views/note/note";
 @import "views/searchInput/searchInput";
 @import "views/portraitOverlay/portraitOverlay";
 @import "views/viewController/viewController";

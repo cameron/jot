@@ -50,8 +50,8 @@ title-bar {
   @include display-flex;
   @include flex(0 0 $title-bar-height-mobile);
   color: $text-color-nav;
-  @include px-shadow;
   @include justify-content(space-between);
+  border-bottom: 1px solid #EEE;
   background-color: white;
   z-index: 2;
   @include screen(desktop){
@@ -78,7 +78,7 @@ title-bar h1 {
 title-bar left-btn, title-bar right-btn {
   cursor: pointer;
   padding: 0 1em 0em .6em;
-  color: $disabled-submit-btn-bg-color;
+  color: $submit-btn-color;
   @include display-flex;
   @include flex-direction-column;
   @include justify-content(center);
@@ -104,7 +104,12 @@ px-view-controller content {
   @include flex(1 1 auto);
   position: relative;
   overflow: hidden;
-  height: 100%;
+}
+
+content view {
+  @include flex(1 0 auto);
+  @include display-flex;
+  @include flex-direction-column;
 }
 
 

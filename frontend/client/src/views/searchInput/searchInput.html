@@ -1,22 +1,16 @@
-<search-input ng-click="focus($event)">
-  <tags>
-    <tag ng-repeat="tag in tagQuery"
-               ng-class="{removing: tag.confirmingRemoval}">
-      {{ tag.name }}
-    </tag>
-  </tags>
+<tags>
+  <tag ng-repeat="tag in tagQuery"
+       ng-class="{removing: tag.confirmingRemoval}">
+    {{ tag.name }}
+  </tag>
+</tags>
 
-  <label class="search-label ss-search" for="note-search">
-  </label>
+<label class="ss-search" for="note-search">
+</label>
 
-  <placeholder ng-show="!searchQuery">
-    search
-  </placeholder>
-
-  <input class="note-search"
-         type="text"
-         ng-disabled="notes.length == 0"
-         ng-model="searchQuery"
-         ng-blur="searchBlur()"
-         px-empty-backspace="popTag()"/>
-</search-input>
+<input class="note-search"
+       type="text"
+       ng-disabled="notes.length == 0"
+       ng-model="searchQuery"
+       ng-blur="searchBlur()"
+       px-empty-backspace="popTag()"/>

@@ -5,6 +5,7 @@ import resources
 
 app = Flask(__name__)
 app.secret_key = 'righteous rabbit electrode pike for sooth and prithee'
+app.dev = True # non-flask api
 
 resources.setup_dbpool()
 

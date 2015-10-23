@@ -21,6 +21,7 @@ angular.module('jot')
     Note.prototype.setJson = function(json){
       json = json || {};
       this.guid = json.guid;
+      this.text = json.value || 'some\nstuff';
     }
 
 
@@ -30,16 +31,12 @@ angular.module('jot')
 
 
     Note.prototype.save = function(){
-      return this.ensureExists().then(function(){
-        var lines = this.text.split('\n');
-        return api('put', '/notes/' + this.id, {
+      return this.ensureExists().then((function(){
+        return api('post', '/users/' + this.parent.guid + '/notes/' + this.guid, {
           tags: this.tags,
           text: this.text,
-        })
-               .then((function(res){
-                 this.setText(res.data);
-               }).bind(this));
-      }.bind(this));
+        });
+      }).bind(this));
     }
 
 

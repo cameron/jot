@@ -1,60 +1,38 @@
 
-px-recipients {
+px-notes {
   @include display-flex;
   @include flex-direction-column;
-  @include flex(0 0 auto);
-  background-color: white;
-  @include screen(desktop){
-    background-color: transparent;
-  }
+  @include flex(1 0 auto);
 }
 
-
-// 1. Above address book
-recipients-input {
-  @include display-flex;
-  cursor: pointer;
-  font-size: 1.2em;
-  color: black;
-  @include px-shadow;
-  position: relative;
-  z-index: 1; // 1
-  @include screen(desktop){
-    font-size: 1.4em;
-    background-color: white;
-  }
+notes {
+  @include px-transition;
 }
 
-
-recipients-input:hover .to-label, recipients-input.next-action .to-label {
-  color: $blue-light;
-}
-
-.to-label {
-  position: relative;
-  top: 2px;
-}
-
-
-placeholder {
-  font-style: italic;
-  color: #CCC;
-  display: none;
-  font-size: .9em;
-  position: relative;
-  top: 5px;
-}
-
-recipients-input.next-action placeholder,
-recipients-input.empty:hover placeholder {
+note {
   display: block;
+  height: 17%;
+  @include display-flex;
+  @include flex-direction-column;
+  @include px-transition;
 }
 
-recipients-input > * {
-  padding: .6em;
-  @include flex(0 0 auto);
+note.editing {
+  height: 100%;
 }
 
+
+note textarea {
+  font-size: .9em;
+  line-height: 1.4em;
+  resize: none;
+  border: 0;
+}
+
+note textarea::first-line {
+  font-weight: bold;
+  font-size: 1.2em;
+}
 
 recipients {
   @include flex(1 1 auto);

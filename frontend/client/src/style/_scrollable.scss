@@ -12,11 +12,14 @@
 
 // 1. depends on a non-statically positioned parent
 .scrollable-content {
-  width: 100%;
-  height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: absolute; // 1.
+  height: 100%;
+  width: 100%;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
 

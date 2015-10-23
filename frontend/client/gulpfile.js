@@ -66,7 +66,8 @@ file('js.js', {
 
 file('css.css', {
   src: ['src/**/*.scss'],
-  ops: [sass.bind(null, {errLogToConsole: true}),
+  ops: [
+    sass.bind(null, {errLogToConsole: true}),
     process.env.PX_UGLIFY_CSS ? minifyCss : util.noop]
 });
 
@@ -98,8 +99,9 @@ file('index.html', {
 
 file('jot.manifest', {
   src: ['src/jot.manifest'],
+  watch: ['build/js.js', 'build/css.css', 'build/index.html'],
   ops: [
-    template.bind(null, {date: Date()})
+    function(){ return template({date: Date()}) }
   ]
 })
 

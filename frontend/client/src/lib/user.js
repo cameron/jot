@@ -86,7 +86,7 @@ angular.module('jot')
     /* login */
 
     User.prototype.pxLogin = function(email, password){
-      log('login to pixinote');
+      log('login to jot');
 
       return api('post', '/session', {
         email: email,
@@ -173,7 +173,7 @@ angular.module('jot')
 
       FB.api('/me', (function(profileRes){
         // don't *overwrite* with values from facebook,
-        // anything already here came from the pixinote
+        // anything already here came from the
         // server and should take precedence
         _.defaults(this, {
           realname: profileRes.name,
@@ -249,7 +249,9 @@ angular.module('jot')
     User.prototype.getNotes = fetcher(function getNotes(){
       return api('get', '/users/' + this.guid + '/notes')
              .success((function(notes){
-               this.notes = notes;
+               this.notes = notes.map((function(json){
+                 return new Note(json, this);
+               }).bind(this));
              }).bind(this));
     }, function shouldFetch(){
       return !!this.guid

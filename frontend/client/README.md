@@ -1,4 +1,4 @@
-_Pixinote Webclient_
+_Jot  Webclient_
 
 # Install Deps and Build
 

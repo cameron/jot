@@ -1,13 +1,13 @@
 <px-portrait-overlay></px-portrait-overlay>
-<px-profile></px-profile>
+<px-tags></px-tags>
 
 <px-view-controller
    px-capture-click="hideSidebar($event)"
    right-btn-class="ss-plus"
    right-btn-click="newNote"
    title-view="searchInput"
-   left-btn-class="ss-tag"
-   left-btn-click="openSidebar">
+   left-btn-class="ss-navigateleft {{ leftBtnOrientation }}"
+   left-btn-click="leftBtnClick">
   <view px-view="page"></view>
 </px-view-controller>
 

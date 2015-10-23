@@ -10,7 +10,6 @@ angular.module('jot')
       ['pxClass', {
         'hide-nav': "hideNav",
         transitioning: "transitioning",
-        'reveal-sidebar': "revealSidebar",
         'hide-title-bar': "hideTitleBar"
       }]])
     .map(function(linkFnName){
